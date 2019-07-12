@@ -1,0 +1,56 @@
+.container {
+    max-width: 960px;
+
+}
+
+.welcome h2 {
+    text-align: center;
+    margin-top: 20px;
+
+}
+
+.container-login {
+
+    border-radius: 1em;
+    padding: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+
+.form {
+
+    max-width: 800px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-left: 30%;
+    font-weight: bold;
+}
+
+.site-header {
+    background-color: rgba(0, 0, 0, .85);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+.site-header a {
+    color: #999;
+    transition: ease-in-out color .15s;
+}
+
+.site-header a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+.btn-block {
+    max-width: 100px;
+}
+
+body {
+
+    background: lightblue url(../image/pizza.jpg) no-repeat fixed center;
+}
+
