@@ -9,6 +9,15 @@
 
 }
 
+.message {
+    font-size: xx-large;
+    text-align: center;
+    color: #7a8afb;
+    margin-top: 100px;
+}
+
+
+
 .container-login {
 
     border-radius: 1em;
@@ -40,6 +49,15 @@
     color: #999;
     transition: ease-in-out color .15s;
 }
+
+.container-pizza-ingredients{
+    font-size: xx-large;
+    text-align: center;
+    color: #7a8afb;
+    margin-top: 100px;
+
+}
+
 
 .site-header a:hover {
     color: #fff;

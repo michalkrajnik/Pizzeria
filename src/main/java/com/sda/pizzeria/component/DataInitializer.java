@@ -2,10 +2,15 @@ package com.sda.pizzeria.component;
 
 
 import com.sda.pizzeria.model.AppUser;
+import com.sda.pizzeria.model.Ingredient;
 import com.sda.pizzeria.model.UserRole;
+import com.sda.pizzeria.model.dto.request.AddIngredientRequest;
 import com.sda.pizzeria.repository.AppUserRepository;
+import com.sda.pizzeria.repository.IngredientRepository;
 import com.sda.pizzeria.repository.UserRoleRepository;
+import com.sda.pizzeria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,6 +25,10 @@ import java.util.Set;
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
+    @Value("${pizzeria.ingredience.default}")
+    private String[] ingredients;
+
+
     @Autowired
     private AppUserRepository appUserRepository;
 
@@ -29,14 +38,35 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private PizzaService pizzaService;
+
+    @Autowired
+    private IngredientRepository ingredientRepository;
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         createInitialRoles();
         createInitialUsers();
+        addDefaultIngredient();
 
 
     }
+
+    private void addDefaultIngredient() {
+        for (String ingredient : ingredients) {
+            addIngredient(ingredient);
+
+        }
+
+
+    }
+
+    private void addIngredient(String ingredient) {
+        pizzaService.addIngredient(new AddIngredientRequest(ingredient));
+    }
+
 
     private void createInitialUsers() {
         addUser("admin", "admin", "ROLE_USER", "ROLE_ADMIN");

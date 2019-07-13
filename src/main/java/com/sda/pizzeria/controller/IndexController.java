@@ -13,16 +13,6 @@ public class IndexController {
     }
 
 
-    @GetMapping("/register")
-    public String getRegisterPage() {
-        return "authorization/register";
-    }
-
-
-    @GetMapping("/pizza")
-    public String getPizzaPage(){
-        return "pizza";
-    }
 
 }
 
