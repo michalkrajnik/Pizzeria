@@ -15,13 +15,13 @@ public class PizzaController {
     @Autowired
     private PizzaService pizzaService;
 
-    @GetMapping("/pizza")
+    @GetMapping("/pizzas")
     public String getPizzas(Model model){
         List<Pizza> pizzaList = pizzaService.getPizzaList();
 
         model.addAttribute("pizzas", pizzaList);
 
-        return "pizza";
+        return "pizzas";
     }
 
 }

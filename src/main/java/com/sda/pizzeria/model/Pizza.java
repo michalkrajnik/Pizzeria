@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,7 +21,7 @@ public class Pizza {
 
     private String name;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Ingredient> products;
+    private Set<Ingredient> products;
 
     private Double price;
 

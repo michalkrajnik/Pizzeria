@@ -19,10 +19,10 @@
     <nav class="site-header sticky-top py-1">
         <div class="container d-flex flex-column flex-md-row justify-content-between">
             <a  class="py-2 d-none d-md-inline-block" th:href="@{/}">Home</a>
-            <a class="py-2 d-none d-md-inline-block" th:href="@{/pizza}">Pizza</a>
+            <a class="py-2 d-none d-md-inline-block" th:href="@{/pizzas}">Pizza</a>
             <a sec:authorize="isAuthenticated()" class="py-2 d-none d-md-inline-block" th:href="@{/user/profile}">Profile</a>
             <a sec:authorize="!isAuthenticated()"class="py-2 d-none d-md-inline-block" th:href="@{/login}">Login</a>
-            <a sec:authorize="isAuthenticated() && hasRole('ADMIN')"class="py-2 d-none d-md-inline-block" th:href="@{/admin}">Admin Panel</a>
+            <a sec:authorize="isAuthenticated() && hasRole('ADMIN')"class="py-2 d-none d-md-inline-block" th:href="@{/admin/pizzaForm}">Admin Panel</a>
             <a sec:authorize="!isAuthenticated()"class="py-2 d-none d-md-inline-block" th:href="@{/register}">Register</a>
             <a sec:authorize="isAuthenticated()" class="py-2 d-none d-md-inline-block" th:href="@{/logout}">Logout</a>
         </div>

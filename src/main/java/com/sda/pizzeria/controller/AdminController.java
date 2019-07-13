@@ -1,8 +1,11 @@
 package com.sda.pizzeria.controller;
 
 
+import com.sda.pizzeria.model.Ingredient;
 import com.sda.pizzeria.model.Pizza;
 import com.sda.pizzeria.model.dto.request.AddPizzaRequest;
+import com.sda.pizzeria.model.dto.request.IngredientRequest;
+import com.sda.pizzeria.model.dto.request.IngredientsRequest;
 import com.sda.pizzeria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(path = "/admin/")
@@ -31,21 +35,38 @@ public class AdminController {
 
 
     @PostMapping(path = "pizzaForm")
-    public String sendNewPizza(Model model, AddPizzaRequest request){
+    public String sendNewPizza(Model model, AddPizzaRequest request) {
         Optional<Pizza> pizzaOptional = pizzaService.addPizza(request);
-        if(pizzaOptional.isPresent()){
+        if (pizzaOptional.isPresent()) {
             Pizza createdPizza = pizzaOptional.get();
             return "redirect:/admin/ingredients/" + createdPizza.getId();
         }
-        model.addAttribute("message","Could not add pizza");
+        model.addAttribute("message", "Could not add pizza");
         model.addAttribute("formObject", request);
         return "admin/pizzaForm";
     }
 
     @GetMapping(path = "/ingredients/{id}")
-    public String getIngredientsForm(Model model, @PathVariable(name = "id") Long id){
+    public String getIngredientsForm(Model model, @PathVariable(name = "id") Long id) {
+        IngredientsRequest request = new IngredientsRequest();
+        request.setPizzaId(id);
+        request.setIngredients(pizzaService.getAllIngredients()
+                .stream()
+                .map(ingredient -> new IngredientRequest(ingredient.getName(), false))
+                .collect(Collectors.toList()));
+
+
+        model.addAttribute("formObject", request);
 
         return "admin/ingredientsForm";
+    }
+
+
+    @PostMapping(path = "/ingredients/{id}")
+    public String sendIngredients(Model model, IngredientsRequest request){
+        Optional<Pizza> optionalPizza = pizzaService.updateIngredients(request);
+
+        return "redirect:/pizzas";
     }
 
 

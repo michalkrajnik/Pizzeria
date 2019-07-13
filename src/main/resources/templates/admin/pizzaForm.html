@@ -15,13 +15,19 @@
     <div class="register form" align="center">
 
         <h2> Pizza Form </h2>
-        <form th:action="@{/admin/pizzaForm}" method="post" th:object="${formObject}">
+        <form th:href="@{/admin/pizzaForm}" method="post" th:object="${formObject}">
 
 
             <div class="form-group">
                 <label for="pizzaName" class="col-sm-3 control-label">Pizza Name</label>
                 <div class="col-sm-9">
                     <input type="text" id="pizzaName" placeholder="Pizza Name" class="form-control" name="pizzaName" th:field="*{name}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pizzaPrice" class="col-sm-3 control-label">Pizza Price</label>
+                <div class="col-sm-9">
+                    <input type="number" id="pizzaPrice" placeholder="Pizza Price" class="form-control" name="pizzaPrice" th:field="*{price}" step="0.01">
                 </div>
             </div>
 
