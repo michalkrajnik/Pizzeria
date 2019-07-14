@@ -80,4 +80,8 @@ public class PizzaService {
     private Set<Ingredient> findAllIngredients(Set<String> ingredientName) {
         return new HashSet<>(ingredientRepository.findAllByNameIn(ingredientName));
     }
+
+    public Optional<Pizza> getPizzaWithId(Long pizzaId) {
+        return pizzaRepository.findById(pizzaId);
+    }
 }

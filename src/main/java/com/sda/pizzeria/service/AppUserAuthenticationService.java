@@ -4,6 +4,7 @@ import com.sda.pizzeria.model.AppUser;
 import com.sda.pizzeria.model.UserRole;
 import com.sda.pizzeria.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,18 +22,16 @@ public class AppUserAuthenticationService implements UserDetailsService {
     private AppUserRepository appUserRepository;
 
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<AppUser> appUserOptional = appUserRepository.findByUsername(username);
-        if(appUserOptional.isPresent()){
-            AppUser appUser= appUserOptional.get();
+        if (appUserOptional.isPresent()) {
+            AppUser appUser = appUserOptional.get();
 
 
             List<String> roles = appUser.getRoles()
-                    .stream().map(userRole-> userRole.getName().replace("ROLE_",""))
+                    .stream().map(userRole -> userRole.getName().replace("ROLE_", ""))
                     .collect(Collectors.toList());
-
 
 
             return User.builder()
@@ -43,4 +42,18 @@ public class AppUserAuthenticationService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("Username could not be found");
     }
+
+    public Optional<AppUser> getLoggedInUser() {
+        if (SecurityContextHolder.getContext().getAuthentication() == null ||
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal() == null ||
+                !SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            return Optional.empty();
+        }
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return appUserRepository.findByUsername(user.getUsername());
+        }
+        return Optional.empty();
+    }
+
 }

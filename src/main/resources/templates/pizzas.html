@@ -1,6 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+
 >
 
 <head>
@@ -12,19 +13,34 @@
 
 <body>
 <th:block th:include="template :: navigator"></th:block>
-<div class="welcome">
-    <h2>Pizza List!</h2>
-</div>
+<th:block th:include="template :: messageBox"></th:block>
+
 <div class="container">
-    <div class="row" th:each="pizza,i :${pizzas}">
-        <div class="col-2" th:text="${pizza.id}"></div>
-        <div class="col-2" th:text="${pizza.name}"></div>
-        <div class="col-2" th:text="${pizza.price}"></div>
-        <div class="col-6" >
-            <div th:each="ingredient: ${pizzas[__${i.index}__].getProducts()}">
-                <p th:text="${ingredient.getName()}"></p>
-            </div>
+    <div class="row welcome-pizzaList"><h2>Pizza List!</h2></div>
+    <div sec:authorize="isAuthenticated() && hasRole('ADMIN')" class="row">
+        <div class="offset-9 col-3">
+
+            <a th:href="@{/admin/pizzaForm}" class="btn btn-info" role="button"> Add Pizza</a>
         </div>
+
+    </div>
+    <div class="row header">
+        <div class="col-1">Id</div>
+        <div class="col-3">Pizza</div>
+        <div class="col-1">Price</div>
+        <div class="col-4">Ingredient</div>
+        <div th:if="${loggedIn}" class="col-2">Actions</div>
+    </div>
+    <div class="row table-row" th:each="pizza,i :${pizzas}">
+        <div class="col-1" th:text="${pizza.id}"></div>
+        <div class="col-3" th:text="${pizza.name}"></div>
+        <div class="col-1" th:text="${pizza.price}"></div>
+        <div class="col-4">
+            <span th:each="ingredient, iterStat: ${pizzas[__${i.index}__].getProducts()}"
+                  th:text="!${iterStat.last} ? ${ingredient.name} +', ': ${ingredient.name}">
+            </span>
+        </div>
+        <div th:if="${loggedIn}" class="col-2"></div>
     </div>
 </div>
 
