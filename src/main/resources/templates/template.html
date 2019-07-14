@@ -20,6 +20,7 @@
         <div class="container d-flex flex-column flex-md-row justify-content-between">
             <a  class="py-2 d-none d-md-inline-block" th:href="@{/}">Home</a>
             <a class="py-2 d-none d-md-inline-block" th:href="@{/pizzas}">Pizza</a>
+            <a sec:authorize="isAuthenticated()" class="py-2 d-none d-md-inline-block" th:href="@{/user/cart}">Cart</a>
             <a sec:authorize="isAuthenticated()" class="py-2 d-none d-md-inline-block" th:href="@{/user/profile}">Profile</a>
             <a sec:authorize="!isAuthenticated()"class="py-2 d-none d-md-inline-block" th:href="@{/login}">Login</a>
             <a sec:authorize="isAuthenticated() && hasRole('ADMIN')"class="py-2 d-none d-md-inline-block" th:href="@{/admin/pizzaForm}">Admin Panel</a>
