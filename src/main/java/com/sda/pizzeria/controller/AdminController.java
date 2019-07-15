@@ -1,11 +1,13 @@
 package com.sda.pizzeria.controller;
 
 
+import com.sda.pizzeria.model.AppUser;
 import com.sda.pizzeria.model.Ingredient;
 import com.sda.pizzeria.model.Pizza;
 import com.sda.pizzeria.model.dto.request.AddPizzaRequest;
 import com.sda.pizzeria.model.dto.request.IngredientRequest;
 import com.sda.pizzeria.model.dto.request.IngredientsRequest;
+import com.sda.pizzeria.service.AppUserService;
 import com.sda.pizzeria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +17,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(path = "/admin/")
 public class AdminController {
+
+    @Autowired
+    private AppUserService appUserService;
 
     @Autowired
     private PizzaService pizzaService;
@@ -68,6 +74,31 @@ public class AdminController {
 
         return "redirect:/pizzas";
     }
+
+    @GetMapping("/userlist")
+    public String getUserList(Model model) {
+        List<AppUser> users = appUserService.getAllUsers();
+
+        model.addAttribute("user_list", users);
+
+        return "admin/userlist";
+
+    }
+
+    @GetMapping(path = "/removeAppUser/{id}")
+    private String removeFromCart(Model model, @PathVariable(name = "id") Long appUserId) {
+        Optional<AppUser> appUserOptional = appUserService.removeAppUser(appUserId);
+        if (appUserOptional.isPresent()) {
+            return "redirect:/admin/userlist";
+        }
+        model.addAttribute("message", "Unsuccessful user remove");
+
+        List<AppUser> appUserList = appUserService.getAllUsers();
+        model.addAttribute("user_list", appUserList);
+
+        return "admin/userlist";
+    }
+
 
 
 }
