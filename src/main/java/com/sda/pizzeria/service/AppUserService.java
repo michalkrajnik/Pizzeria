@@ -4,6 +4,7 @@ import com.sda.pizzeria.model.AppUser;
 import com.sda.pizzeria.model.CartOrder;
 import com.sda.pizzeria.model.Pizza;
 import com.sda.pizzeria.model.UserCart;
+import com.sda.pizzeria.model.dto.request.AppUserRequest;
 import com.sda.pizzeria.model.dto.request.RegisterUserRequest;
 import com.sda.pizzeria.repository.AppUserRepository;
 import com.sda.pizzeria.repository.CartOrderRepository;
@@ -144,6 +145,30 @@ public class AppUserService {
         }
 
         return optionalAppUser;
+    }
+
+    public void updateAppUser(AppUserRequest appUserRequest) {
+        Optional<AppUser> optionalAppUser = appUserRepository.findById(appUserRequest.getAppUserId());
+        if (optionalAppUser.isPresent()) {
+
+
+            AppUser originalAppUser = optionalAppUser.get();
+
+            if (appUserRequest.getAppUserId() != null) {
+                originalAppUser.setId(appUserRequest.getAppUserId());
+            }
+
+            if (appUserRequest.getEditedUsername() != null) {
+                originalAppUser.setUsername(appUserRequest.getEditedUsername());
+            }
+            appUserRepository.saveAndFlush(originalAppUser);
+
+
+        }
+    }
+
+    public Optional<AppUser> findAppUserById(Long appUserId) {
+        return appUserRepository.findById(appUserId);
     }
 }
 

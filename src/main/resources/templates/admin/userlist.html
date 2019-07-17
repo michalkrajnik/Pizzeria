@@ -22,6 +22,7 @@
             <div class="col-4" th:text="${user.username}"></div>
             <div class="offset-1 col-3">
                 <div class="col-4"><a th:href="@{'/admin/removeAppUser/' + ${user.id}}">Remove</a></div>
+                <div class="col-4"><a th:href="@{'/admin/updateAppUser/' + ${user.id}}">Update</a></div>
             </div>
         </div>
     </div>

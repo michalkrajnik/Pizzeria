@@ -1,0 +1,34 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:include="template :: scripts_header"></th:block>
+
+    <title>Pizzeria - Pizza IngredientsForm</title>
+</head>
+
+<body>
+<th:block th:include="template :: navigator"></th:block>
+
+
+<div class="register form" align="center">
+
+    <h2> Update Profil Form</h2>
+
+    <form th:href="@{'/admin/updateAppUser' + ${userToEdit.appUserId}}"
+          method="post" th:object="${userToEdit}">
+        <input type="hidden" th:field="*{appUserId}" th:value="*{appUserId}">
+        <div class="form-group">
+            <label>Username</label>
+            <input class="form-control" type="text" th:field="*{editedUsername}" th:value="*{editedUsername}">
+        </div>
+
+        <button class="btn btn-primary" type="submit">SAVE</button>
+    </form>
+</div>
+<th:block th:include="template :: scripts_footer"></th:block>
+</body>
+
+
+</html>

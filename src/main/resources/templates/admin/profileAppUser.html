@@ -1,0 +1,24 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:include="template :: scripts_header"></th:block>
+
+    <title>Pizzeria</title>
+</head>
+
+<body>
+<th:block th:include="template :: navigator"></th:block>
+<div class="welcome">
+    <h2>Update AppUser!</h2>
+
+    <form method="post" th:href="@{/admin/updateAppUser/}" th:object="${userToEdit}">
+
+    </form>
+</div>
+<th:block th:include="template :: scripts_footer"></th:block>
+</body>
+
+
+</html>

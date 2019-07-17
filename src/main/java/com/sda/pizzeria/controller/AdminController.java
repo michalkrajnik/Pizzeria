@@ -5,6 +5,7 @@ import com.sda.pizzeria.model.AppUser;
 import com.sda.pizzeria.model.Ingredient;
 import com.sda.pizzeria.model.Pizza;
 import com.sda.pizzeria.model.dto.request.AddPizzaRequest;
+import com.sda.pizzeria.model.dto.request.AppUserRequest;
 import com.sda.pizzeria.model.dto.request.IngredientRequest;
 import com.sda.pizzeria.model.dto.request.IngredientsRequest;
 import com.sda.pizzeria.service.AppUserService;
@@ -69,7 +70,7 @@ public class AdminController {
 
 
     @PostMapping(path = "/ingredients/{id}")
-    public String sendIngredients(Model model, IngredientsRequest request){
+    public String sendIngredients(Model model, IngredientsRequest request) {
         Optional<Pizza> optionalPizza = pizzaService.updateIngredients(request);
 
         return "redirect:/pizzas";
@@ -86,7 +87,7 @@ public class AdminController {
     }
 
     @GetMapping(path = "/removeAppUser/{id}")
-    private String removeFromCart(Model model, @PathVariable(name = "id") Long appUserId) {
+    public String removeFromCart(Model model, @PathVariable(name = "id") Long appUserId) {
         Optional<AppUser> appUserOptional = appUserService.removeAppUser(appUserId);
         if (appUserOptional.isPresent()) {
             return "redirect:/admin/userlist";
@@ -100,5 +101,23 @@ public class AdminController {
     }
 
 
+    @GetMapping(path = "/updateAppUser/{userId}")
+    public String getUsertoEdit(Model model, @PathVariable(name = "userId")Long id){
+
+       AppUserRequest appUserRequest = new AppUserRequest();
+        appUserRequest.setAppUserId(id);
+        appUserRequest.setEditedUsername(appUserRequest.getEditedUsername());
+
+        model.addAttribute("userToEdit", appUserRequest);
+
+        return "admin/userToEdit";
+    }
+
+    @PostMapping(path = "/updateAppUser/{userId}")
+    public String sendUpdatedUser(AppUserRequest request) {
+       appUserService.updateAppUser(request);
+
+        return "redirect:/admin/userlist";
+    }
 
 }
