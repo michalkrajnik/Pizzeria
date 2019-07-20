@@ -20,5 +20,6 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private double price;
 
 }

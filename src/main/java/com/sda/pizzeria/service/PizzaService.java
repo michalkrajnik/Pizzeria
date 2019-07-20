@@ -43,7 +43,7 @@ public class PizzaService {
     public Optional<Ingredient> addIngredient(AddIngredientRequest addIngredientRequest) {
         Optional<Ingredient> ingredientOptional = ingredientRepository.findByName(addIngredientRequest.getName());
         if (!ingredientOptional.isPresent()) {
-            return Optional.of(ingredientRepository.save(new Ingredient(null, addIngredientRequest.getName())));
+            return Optional.of(ingredientRepository.save(new Ingredient(null, addIngredientRequest.getName(), addIngredientRequest.getPrice())));
         }
         return Optional.empty();
     }

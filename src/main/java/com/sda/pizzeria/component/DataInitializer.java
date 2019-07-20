@@ -27,8 +27,8 @@ import java.util.Set;
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Value("${pizzeria.ingredience.default}")
-    private String[] ingredients;
+//    @Value("${pizzeria.ingredience.default}")
+//    private String[] ingredients;
 
 
     @Autowired
@@ -46,28 +46,31 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private UserCartRepository userCartRepository;
 
+    @Autowired
+    private IngredientRepository ingredientRepository;
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         createInitialRoles();
         createInitialUsers();
-        addDefaultIngredient();
+        createInitialIngredient();
 
 
     }
 
-    private void addDefaultIngredient() {
-        for (String ingredient : ingredients) {
-            addIngredient(ingredient);
+//    private void addDefaultIngredient() {
+//        for (String ingredient : ingredients) {
+//            addIngredient(ingredient);
+//
+//        }
+//
+//
+//    }
 
-        }
-
-
-    }
-
-    private void addIngredient(String ingredient) {
-        pizzaService.addIngredient(new AddIngredientRequest(ingredient));
-    }
+//    private void addIngredient(String ingredient) {
+//        pizzaService.addIngredient(new AddIngredientRequest(ingredient));
+//    }
 
 
     private void createInitialUsers() {
@@ -115,6 +118,32 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
             userRoleRepository.save(role);
         }
     }
+
+
+    private void createInitialIngredient(){
+
+        addIngredient("Cheese", 2);
+        addIngredient("Tomato", 2);
+        addIngredient("Chicken", 5);
+
+
+    }
+
+    private void addIngredient(String name, double price) {
+        Optional<Ingredient> serchedIngredient = ingredientRepository.findByName(name);
+        if(!serchedIngredient.isPresent()){
+            Ingredient ingredient = new Ingredient();
+            ingredient.setName(name);
+            ingredient.setPrice(price);
+
+            ingredientRepository.save(ingredient);
+
+        }
+
+
+    }
+
+
 }
 
 

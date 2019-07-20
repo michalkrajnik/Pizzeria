@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:include="template :: scripts_header"></th:block>
+
+    <title>Pizzeria</title>
+</head>
+
+<body>
+<th:block th:include="template :: navigator"></th:block>
+<div class="welcome">
+    <h2>Welcome in Pizzeria - Ingredient List!</h2>
+    <div class="container">
+        <div class="row header">
+            <div class="col-3">Id</div>
+            <div class="col-3">User</div>
+            <div class="col-3">Price</div>
+
+        </div>
+        <div class="row table-row" th:each="ingredient,i :${ingredient_list}">
+            <div class="col-3" th:text="${ingredient.id}"></div>
+            <div class="col-3" th:text="${ingredient.name}"></div>
+            <div class="col-3" th:text="${ingredient.price}"></div>
+        </div>
+    </div>
+
+
+</div>
+<th:block th:include="template :: scripts_footer"></th:block>
+</body>
+
+
+</html>

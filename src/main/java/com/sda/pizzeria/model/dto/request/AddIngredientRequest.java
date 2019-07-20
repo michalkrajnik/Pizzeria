@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class AddIngredientRequest {
 
     private String name;
+    private double price;
 }

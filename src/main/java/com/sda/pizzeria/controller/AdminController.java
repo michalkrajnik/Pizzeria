@@ -9,6 +9,7 @@ import com.sda.pizzeria.model.dto.request.AppUserRequest;
 import com.sda.pizzeria.model.dto.request.IngredientRequest;
 import com.sda.pizzeria.model.dto.request.IngredientsRequest;
 import com.sda.pizzeria.service.AppUserService;
+import com.sda.pizzeria.service.IngredientService;
 import com.sda.pizzeria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,9 @@ public class AdminController {
 
     @Autowired
     private PizzaService pizzaService;
+
+    @Autowired
+    private IngredientService ingredientService;
 
 
     @GetMapping(path = "pizzaForm")
@@ -119,5 +123,17 @@ public class AdminController {
 
         return "redirect:/admin/userlist";
     }
+
+
+    @GetMapping("/ingredientList")
+    public String getIngredientList(Model model) {
+        List<Ingredient> ingredients = ingredientService.getAllIngredient();
+
+        model.addAttribute("ingredient_list", ingredients);
+
+        return "admin/ingredientList";
+
+    }
+
 
 }
