@@ -136,4 +136,30 @@ public class AdminController {
     }
 
 
+@GetMapping(path = "/addIngredient")
+    public String getIngredientForm(Model model){
+
+
+        model.addAttribute("formObject", new IngredientRequest());
+
+        return "admin/ingredientForm";
+
+
+}
+
+    @PostMapping("/addIngredient")
+    public String sendRegister(Model model, IngredientRequest request) {
+
+        Optional<Ingredient> optionalIngredient = ingredientService.addIngredient(request);
+        if (optionalIngredient.isPresent()) {
+            return "redirect:/admin/ingredientList";
+        }
+        model.addAttribute("message", "Could not Add!");
+        model.addAttribute("formObject", request);
+
+
+        return "admin/ingredientList";
+    }
+
+
 }

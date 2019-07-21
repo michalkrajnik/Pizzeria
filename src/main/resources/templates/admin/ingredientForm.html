@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:include="template :: scripts_header"></th:block>
+
+    <title>Pizzeria</title>
+</head>
+
+<body>
+<th:block th:include="template :: navigator"></th:block>
+<div class="welcome">
+    <h2>Add ingredient!</h2>
+
+    <div class="container">
+        <h2>Horizontal form</h2>
+        <form th:href="@{/admin/addIngredient}" method="post" th:object="${formObject}" >
+
+
+            <div class="form-group">
+                <label for="ingredient" class="col-sm-3 control-label">Ingredient Name</label>
+                <div class="col-sm-9">
+                    <input type="text" id="ingredient" placeholder="Ingredient Name" class="form-control" name="ingredientName" th:field="*{name}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ingredientPrice" class="col-sm-3 control-label">Ingredient Price</label>
+                <div class="col-sm-9">
+                    <input type="number" id="ingredientPrice" placeholder="Ingredient Price" class="form-control" name="ingredientPrice" th:field="*{price}" step="0.01">
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary btn-block">Add</button>
+        </form>
+    </div>
+
+
+
+</div>
+<th:block th:include="template :: scripts_footer"></th:block>
+</body>
+
+
+</html>
